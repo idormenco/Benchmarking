@@ -6,7 +6,6 @@ namespace Benchmarking.BenchmarkDotNet
 	{
 		public static void Main(string[] args)
 		{
-			// Use BenchmarkRunner.Run to Benchmark your code
 			var summary = BenchmarkRunner.Run<StringCompareVsEquals>();
 		}
 	}

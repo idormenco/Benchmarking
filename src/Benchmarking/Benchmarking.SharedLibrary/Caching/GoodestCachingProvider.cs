@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.Extensions.Caching.Memory;
-
+using System.Runtime.Caching;
 
 namespace Benchmarking.SharedLibrary.Caching
 {
 	public class GoodestCachingProvider : ICachingProvider
 	{
-		private static IMemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
+		private static MemoryCache _cache = MemoryCache.Default;
 
 		private GoodestCachingProvider()
 		{
@@ -18,11 +17,11 @@ namespace Benchmarking.SharedLibrary.Caching
 		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc)
 		{
 			string key = request.ToString();
-			T cachedValue = _cache.Get<T>(key);
+			T cachedValue = (T)_cache.Get(key);
 			if (cachedValue == null)
 			{
 				var result = retrieveFunc(request);
-				_cache.Set(key, result);
+				_cache.Set(key, result, DateTimeOffset.MaxValue);
 				return result;
 			}
 
