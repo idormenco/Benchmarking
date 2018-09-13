@@ -8,13 +8,13 @@ namespace Benchmarking.SharedLibrary.Caching
 	{
 		private readonly List<Tuple<string, object>> _cache = new List<Tuple<string, object>>();
 
-		private static BadCachingProvider Instance => new BadCachingProvider();
+		public static BadCachingProvider Instance => new BadCachingProvider();
 
 		private BadCachingProvider()
 		{
 		}
 
-		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc) where T : new()
+		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc) 
 		{
 			var key = request.ToString();
 			var chachedObject = _cache.FirstOrDefault(x => x.Item1 == key);
@@ -22,6 +22,7 @@ namespace Benchmarking.SharedLibrary.Caching
 			{
 				var retrievedValue = retrieveFunc(request);
 				_cache.Add(Tuple.Create<string, object>(key, retrievedValue));
+				return retrievedValue;
 			}
 
 			return (T)chachedObject.Item2;

@@ -7,13 +7,13 @@ namespace Benchmarking.SharedLibrary.Caching
 	{
 		private readonly Dictionary<string, object> _cache = new Dictionary<string, object>();
 
-		private static GooderCachingProvider Instance => new GooderCachingProvider();
+		public static GooderCachingProvider Instance => new GooderCachingProvider();
 
 		private GooderCachingProvider()
 		{
 		}
 
-		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc) where T : new()
+		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc)
 		{
 			var key = request.ToString();
 			object chacheValue;
@@ -22,6 +22,7 @@ namespace Benchmarking.SharedLibrary.Caching
 			{
 				var retrievedValue = retrieveFunc(request);
 				_cache.Add(key, retrievedValue);
+				return retrievedValue;
 			}
 
 			return (T)chacheValue;

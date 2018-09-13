@@ -1,24 +1,28 @@
 ﻿using System;
-using System.Runtime.Caching;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace Benchmarking.SharedLibrary.Caching
 {
-	public class GoodestCachingProvider:ICachingProvider
+	public class GoodestCachingProvider : ICachingProvider
 	{
-		private static MemoryCache _cache = MemoryCache.Default;
-		private static readonly CacheItemPolicy _cacheItemPolicy = new CacheItemPolicy()
-		{
-			AbsoluteExpiration = DateTimeOffset.MaxValue
-		};
+		private static IMemoryCache _cache = new MemoryCache(new MemoryCacheOptions());
 
-		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc) where T : new()
+		private GoodestCachingProvider()
+		{
+
+		}
+
+		public static GoodestCachingProvider Instance => new GoodestCachingProvider();
+
+		public T GetValue<TK, T>(TK request, Func<TK, T> retrieveFunc)
 		{
 			string key = request.ToString();
-			T cachedValue = (T)_cache[key];
+			T cachedValue = _cache.Get<T>(key);
 			if (cachedValue == null)
 			{
 				var result = retrieveFunc(request);
-				_cache.Set(key, result, _cacheItemPolicy);
+				_cache.Set(key, result);
 				return result;
 			}
 
