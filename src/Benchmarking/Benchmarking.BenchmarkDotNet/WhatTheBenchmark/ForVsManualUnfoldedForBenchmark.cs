@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Benchmarking.BenchmarkDotNet.WhatTheBenchmark
 {
-	class Sums
+	class ForVsManualUnfoldedForBenchmark
 	{
 	}
 }
