@@ -17,6 +17,19 @@ namespace Benchmarking.BenchmarkDotNet
 			Fill(arr);
 			return arr;
 		}
+		public static int[] Random10IntArray(int size)
+		{
+			int[] arr = new int[size];
+			Fill10(arr);
+			return arr;
+		}
+
+		public static bool[] RandomBoolArray(int size)
+		{
+			bool[] arr = new bool[size];
+			FillBool(arr);
+			return arr;
+		}
 
 		public static double[] RandomDoubleArray(int size)
 		{
@@ -43,6 +56,22 @@ namespace Benchmarking.BenchmarkDotNet
 			for (int i = 0; i < array.Length; i++)
 			{
 				array[i] = rnd.Next();
+			}
+		}
+		private static void Fill10(int[] array)
+		{
+			Random rnd = new Random(0xBAD_BEE);
+			for (int i = 0; i < array.Length; i++)
+			{
+				array[i] = rnd.Next() % 2;
+			}
+		}
+		private static void FillBool(bool[] array)
+		{
+			Random rnd = new Random(0xBAD_BEE);
+			for (int i = 0; i < array.Length; i++)
+			{
+				array[i] = rnd.Next() % 2 == 0;
 			}
 		}
 

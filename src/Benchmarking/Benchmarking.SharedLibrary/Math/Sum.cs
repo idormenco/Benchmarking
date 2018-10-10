@@ -1,7 +1,22 @@
-﻿namespace Benchmarking.SharedLibrary.Math
+﻿using System.Linq;
+
+namespace Benchmarking.SharedLibrary.Math
 {
 	public class Sums
 	{
+		public int SumArrayWithForWithIf(int[] numbers)
+		{
+			int sum = 0;
+			for (int i = 0; i < numbers.Length; i++)
+			{
+				if (numbers[i] > 0)
+				{
+					sum += numbers[i];
+				}
+
+			}
+			return sum;
+		}
 		public int SumArrayWithFor(int[] numbers)
 		{
 			int sum = 0;
@@ -32,7 +47,7 @@
 			return sum;
 		}
 
-		public int SumArray2s(int[] numbers)
+		public int SumArray2Sums(int[] numbers)
 		{
 			int s0 = 0;
 			int s1 = 0;
@@ -45,7 +60,7 @@
 			return s0 + s1;
 		}
 
-		public int SumArray4(int[] numbers)
+		public int SumArray4Sums(int[] numbers)
 		{
 			int sum = 0;
 			int sum1 = 0;
@@ -61,7 +76,7 @@
 			return (sum + sum1) + (sum2 + sum3);
 		}
 
-		public int SumArray8(int[] numbers)
+		public int SumArray8Sums(int[] numbers)
 		{
 			int sum0 = 0;
 			int sum1 = 0;
@@ -85,6 +100,11 @@
 			}
 
 			return ((sum0 + sum1) + (sum2 + sum3)) + ((sum4 + sum5) + (sum6 + sum7));
+		}
+
+		public int LinqSum(int[] array)
+		{
+			return array.Sum();
 		}
 	}
 }

@@ -1,13 +1,13 @@
-﻿using BenchmarkDotNet.Attributes;
-using System;
+﻿using System;
 using System.Linq;
+using BenchmarkDotNet.Attributes;
 
-namespace Benchmarking.BenchmarkDotNet
+namespace Benchmarking.BenchmarkDotNet.Benchmarks
 {
-	[RPlotExporter, RankColumn]
+	[RankColumn]
 	public class StringCompareVsEquals
 	{
-		private static Random random = new Random();
+		private static readonly Random Random = new Random();
 		private string s1;
 		private string s2;
 
@@ -15,7 +15,7 @@ namespace Benchmarking.BenchmarkDotNet
 		{
 			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 			return new string(Enumerable.Repeat(chars, length)
-				.Select(s => s[random.Next(s.Length)]).ToArray());
+				.Select(s => s[Random.Next(s.Length)]).ToArray());
 		}
 
 		// We wil run the the test for 2 diff string lengths: 10 & 100
@@ -35,5 +35,8 @@ namespace Benchmarking.BenchmarkDotNet
 
 		[Benchmark]
 		public bool StringCompare() => string.Compare(s1, s2, true) == 0;
+
+		[Benchmark]
+		public bool StringCompareOrdinalCase() => string.Compare(s1, s2, StringComparison.OrdinalIgnoreCase) == 0;
 	}
 }

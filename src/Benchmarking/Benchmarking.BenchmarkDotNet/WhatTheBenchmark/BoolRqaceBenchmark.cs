@@ -1,16 +1,13 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Benchmarking.SharedLibrary.Math;
 using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.InProcess;
+using Benchmarking.SharedLibrary.Math;
 
 namespace Benchmarking.BenchmarkDotNet.WhatTheBenchmark
 {
 	[Config(typeof(Config))]
-	[RankColumn]
-	//[HardwareCounters(HardwareCounter.BranchMispredictions, HardwareCounter.BranchInstructions)]
-	public class ForVsForeachBenchmark
+	public class BoolRqaceBenchmark
 	{
 		private class Config : ManualConfig
 		{
@@ -21,28 +18,31 @@ namespace Benchmarking.BenchmarkDotNet.WhatTheBenchmark
 					.WithId("InProcess"));
 			}
 		}
-		private int[] array;
+
+		private bool[] array1;
+		private bool[] array2;
 
 		[Params(10, 100, 1000)]
 		public int ArrayLength;
-		private Sums sumClass = new Sums();
+	
 
 		[GlobalSetup]
 		public void Setup()
 		{
-			array = Utils.RandomIntArray(ArrayLength);
+			array1= Utils.RandomBoolArray(ArrayLength);
+			array2= Utils.RandomBoolArray(ArrayLength);
 		}
 
 		[Benchmark]
-		public int ForeachSum()
+		public int CountConditional()
 		{
-			return sumClass.SumArrayWithForeach(array);
+			return BooleanCounts.CountConditional(array1,array2);
 		}
 
 		[Benchmark]
-		public int ForSum()
+		public int CountLogical()
 		{
-			return sumClass.SumArrayWithFor(array);
+			return BooleanCounts.CountLogical(array1, array2);
 		}
 	}
 }

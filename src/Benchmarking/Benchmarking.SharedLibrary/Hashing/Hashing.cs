@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using BCrypt.Net;
 
 namespace Benchmarking.SharedLibrary.Hashing
 {
@@ -25,7 +26,12 @@ namespace Benchmarking.SharedLibrary.Hashing
 
 		public static string BlowFish(string value)
 		{
-			return "";
+			return BCrypt.Net.BCrypt.HashPassword(value);
+		}
+
+		public static string BlowFish(string value,int workFactor)
+		{
+			return BCrypt.Net.BCrypt.HashPassword(value, workFactor);
 		}
 	}
 }
