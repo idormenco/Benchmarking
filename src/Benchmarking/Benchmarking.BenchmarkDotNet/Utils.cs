@@ -25,6 +25,18 @@ namespace Benchmarking.BenchmarkDotNet
 			return arr;
 		}
 
+		internal static int[] FillWithPattern(int size, string benchPattern)
+		{
+			var regularData = new int[size];
+			for (int i = 0, j = 0; i < size; i++)
+			{
+				regularData[i] = benchPattern[j] == '1' ? 1 : -1;
+				j = (j + 1) % benchPattern.Length;
+			}
+
+			return regularData;
+		}
+
 		private static void Fill(int[] array)
 		{
 			Random rnd = new Random(0xBAD_BEE);

@@ -2,7 +2,7 @@
 {
 	public class Sums
 	{
-		public int SumArray1(int[] numbers)
+		public int SumArrayWithFor(int[] numbers)
 		{
 			int sum = 0;
 			for (int i = 0; i < numbers.Length; i++)
@@ -12,7 +12,7 @@
 			return sum;
 		}
 
-		public int SumArray2(int[] numbers)
+		public int SumArrayWithForeach(int[] numbers)
 		{
 			int sum = 0;
 			foreach (var nr in numbers)
@@ -22,7 +22,7 @@
 			return sum;
 		}
 
-		public int SumArray3(int[] numbers)
+		public int SumArrayUnfolded(int[] numbers)
 		{
 			int sum = 0;
 			for (int i = 0; i < numbers.Length; i += 4)
